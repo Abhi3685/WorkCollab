@@ -1,0 +1,118 @@
+<section id="home">
+    <div class="content-wrapper">
+        <div class="container">
+
+            <div *ngIf="showLoader" class="loader-wrapper">
+                <div class="loader text-center">
+                    <img src="../../assets/icon.gif" width="80">
+                </div>
+            </div>
+
+            <div *ngIf="!showLoader" class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <button class="btn btn-link">
+                            Basic Task Details
+                        </button>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <span>Task Name</span>
+                            <input #name class="form-control mb-2" value="{{task.name}}">
+                            <span>Description</span>
+                            <textarea #desc class="form-control" value="{{task.description}}" placeholder="Add a detailed description …" style="color: black; overflow-y: auto; overflow-wrap: break-word; resize: none; height: 90px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <button class="btn btn-link collapsed">
+                            Task Labels
+                        </button>
+                    </div>
+
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <p>Type & Press Enter to add label</p>
+                            <input #label (keyup.enter)="addLabel(label.value); label.value=''" class="form-control">
+                            <div class="labels">
+                                <span *ngFor="let label of task.labels" class="badge badge-info mr-2">{{label}} &nbsp;&nbsp;<i (click)="removeLabel(label)" class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <button class="btn btn-link collapsed">
+                            Assign Task Member
+                        </button>
+                    </div>
+
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <p>Click on team member to assign user to this task</p>
+                            <div class="pmember mb-1" *ngFor="let member of projectMembers.sort()" (click)="toggleTaskMember(member._id)">
+                                <avatar-name class="avatar mr-2" [name]="member.name"></avatar-name>
+                                {{member.name}}
+                                <span class="float-right" *ngIf="taskUserId && member._id == taskUserId"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <button class="btn btn-link collapsed">
+                            Task Comments
+                        </button>
+                    </div>
+
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <p>Type & Press Enter to add a comment</p>
+                            <input #comment (keyup.enter)="addComment(comment.value); comment.value=''" class="form-control">
+                            <div class="comments">
+                                <div class="comment my-1" *ngFor="let comment of comments; let i = index">
+                                    <span class="d-block"><b>{{comment.assignedUser.name}}</b>&nbsp; {{comment.createdAt}}</span> {{comment.comment}}
+                                    <span class="float-right"><i (click)="confirmCommentDelete(comment._id, i)" class="fa fa-trash"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFive" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        <button class="btn btn-link collapsed">
+                            Task Attachments
+                        </button>
+                    </div>
+
+                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <input type="file" class="form-control d-inline" style="max-width: calc(100% - 100px)" name="uploadFile" ng2FileSelect [uploader]="uploader" />
+                            <button type="button" class="btn btn-success ml-2" (click)="uploader.uploadAll()">
+                                Upload
+                            </button>
+                            <div class="attachments">
+                                <div class="attachment my-1" *ngFor="let attachment of attachments; let i = index">
+                                    <span (click)="openAttachment(attachment.fileUrl)"><b>{{attachment.name}}</b><br>{{attachment.createdAt}}</span>
+                                    <span class="float-right"><i (click)="confirmAttachmentDelete(attachment._id, i)" class="fa fa-trash"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div data-parent="#accordionExample">
+                        <div class="card-body actionBtns">
+                            <button (click)="updateTask(desc.value, name.value)" class="btn btn-primary mr-2">Save Changes</button>
+                            <button (click)="goback()" class="btn btn-secondary mr-2">Cancel</button>
+                            <button (click)="deleteTask()" class="btn btn-danger">Delete Task</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

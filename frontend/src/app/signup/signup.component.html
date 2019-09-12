@@ -1,0 +1,40 @@
+<section id="home">
+    <div class="container">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6 leftBlock text-center">
+                    <h3>Welcome to Amigo.</h3>
+                    <p>Are you ready to join our family?</p>
+                </div>
+                <div class="col-md-6 rightBlock">
+                    <div id="signup-wrapper" class="p-5">
+                        <form>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" #email class="form-control" placeholder="john.doe@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" #name placeholder="john doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" #password placeholder="********">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" class="form-control" #confirmPassword placeholder="********">
+                            </div>
+                            <div class="text-center">
+                                <button #registerBtn class="btn btn-primary px-5" (click)="registerUser();">
+                                    Register
+                                </button><br>
+                                <a routerLink="/login">Already a member?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,115 @@
+#home {
+    background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+    color: #002b49;
+    padding-top: 50px;
+}
+
+#home h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#home2 {
+    color: #002b49;
+    background: #f5f7fa;
+}
+
+#home2 h1 {
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.left p {
+    font-size: 23px;
+}
+
+.getStartedBtn,
+.startDoingBtn {
+    box-shadow: 0px 2px 5px 0px #002b49;
+}
+
+.startDoingBtn {
+    width: fit-content;
+    margin: 20px auto 0 auto;
+}
+
+.feature {
+    width: 70% !important;
+    padding: 0 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.feature-l {
+    margin-left: auto;
+}
+
+.feature-r {
+    margin-right: auto;
+}
+
+@media (max-width: 575.98px) {
+    .left {
+        padding: 50px 50px 10px 15px;
+    }
+    .right img {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        width: 70%;
+    }
+    .feature {
+        margin: auto;
+        padding: 0;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .left {
+        padding: 50px 50px 10px 15px;
+    }
+    .right img {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        width: 70%;
+    }
+    .feature {
+        margin: auto;
+        padding: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .left {
+        padding: 70px 50px 10px 15px;
+    }
+    .right img {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        width: 70%;
+    }
+    .feature {
+        margin: auto;
+        padding: 0;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .left {
+        padding: 120px 50px 10px 15px;
+        margin-bottom: 60px;
+    }
+    .right {
+        padding-top: 150px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .left {
+        padding: 120px 50px 10px 15px;
+        margin-bottom: 100px;
+    }
+    .right {
+        padding-top: 120px;
+    }
+}

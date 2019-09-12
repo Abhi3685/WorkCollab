@@ -1,0 +1,51 @@
+<section id="home">
+    <div *ngIf="showLoader" class="loader-wrapper">
+        <div class="loader text-center">
+            <img src="../../assets/icon.gif" width="80">
+        </div>
+    </div>
+
+    <div *ngIf="!showLoader" class="container py-5">
+        <h3 class="text-center mainHeading">Your Projects</h3>
+        <hr class="mainUnderline"><br>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let project of projects">
+                <div class="card projectCard" routerLink="/project/{{project._id}}">
+                    <div class="card-body">
+                        <span class="project-title">{{project.name}}</span><br>
+                        <span class="project-date"><i class="fa fa-calendar"></i> {{project.createdAt}}</span>
+                        <span class="project-users"><i class="fa fa-user-circle-o"></i> {{project.users.length}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card createNewCard" data-toggle="modal" data-target="#addProjectModal">
+                    <div class="card-body">
+                        <span style="font-size: 18px"><i class="fa fa-plus"></i> New Project</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="addProjectModal" class="modal fade in" style="top: 20%">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Project</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="pname">Project Name</label>
+                <input #name class="form-control" id="pname">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" #createPjctBtn (click)="addProject(name.value)" data-dismiss="modal">Create Project</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

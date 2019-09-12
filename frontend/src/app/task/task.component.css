@@ -1,0 +1,91 @@
+#home {
+    min-height: 91vh;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+}
+
+.avatar /deep/ .gavatar {
+    margin: 0px;
+    border-radius: 15px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.pmember {
+    width: 90%;
+    padding: 5px 10px;
+    border-radius: 15px;
+    max-width: 300px;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.pmember:hover,
+.comment:hover,
+.attachment:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.fa-check {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.comment {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.attachment {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.loader-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+}
+
+.loader {
+    width: 100%;
+}
+
+.btn-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.card-header {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 0.4rem;
+    background: #007bffaf;
+}
+
+.actionBtns {
+    background: #f7f7f7;
+    border: 2px solid #f9f9f9;
+    border-radius: 0.4rem;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.card {
+    border-radius: 0.4rem;
+    margin-bottom: 5px;
+}

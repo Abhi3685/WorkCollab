@@ -1,0 +1,185 @@
+<section id="home">
+
+    <div *ngIf="showLoader" class="loader-wrapper">
+        <div class="loader text-center">
+            <img src="../../assets/icon.gif" width="80">
+        </div>
+    </div>
+
+    <div *ngIf="!showLoader" class="container-fluid">
+        <div style="margin: 0 0 10px 10px;">
+            <h3 class="ptitle">{{project.name}}</h3>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm float-right dropdown-toggle px-3" data-toggle="dropdown"> &nbsp;Menu </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" data-toggle="modal" data-target="#renameModal">Rename Project</a>
+                    <a class="dropdown-item" (click)="showPanel = true">Team Members</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#addMemberModal">Add Team Member</a>
+                    <a class="dropdown-item" *ngIf="project.ownerId == userId" (click)="confirmDelete()">Delete Project</a>
+                    <a class="dropdown-item" *ngIf="project.ownerId != userId" (click)="confirmLeave()">Leave Project</a>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <div cdkDropListGroup id="list-wrapper">
+            <div class="plist">
+                <h3>
+                    <span class="float-left list-title">To Do&nbsp;&nbsp;<span class="badge badge-info">{{l1.length}}</span></span>
+                    <span class="float-right"><i data-toggle="modal" data-target="#addTaskModal" (click)="edit = 1" class="fa fa-plus"></i></span>
+                </h3>
+                <ul cdkDropList [cdkDropListData]="l1" (cdkDropListDropped)="drop($event)">
+                    <div cdkDrag class="taskLink" *ngFor="let task of l1">
+                        <div class="drag-placeholder" *cdkDragPlaceholder></div>
+                        <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
+                            <span class="ttitle text-muted">{{task.name}}</span><br>
+                            <span class="tdesc text-muted">{{task.description}}</span>
+                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
+                            <span *ngIf="task.commentCount" class="tdt mx-2 badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
+                        </li>
+                    </div>
+                </ul>
+                <div class="newTask" data-toggle="modal" data-target="#addTaskModal" (click)="edit = 1"><i class="fa fa-plus"></i> Add New Task</div>
+            </div>
+
+            <div class="plist">
+                <h3>
+                    <span class="float-left list-title">In Progress&nbsp;&nbsp;<span class="badge badge-info">{{l2.length}}</span></span>
+                    <span class="float-right"><i data-toggle="modal" data-target="#addTaskModal" (click)="edit = 2" class="fa fa-plus"></i></span>
+                </h3>
+                <ul cdkDropList [cdkDropListData]="l2" (cdkDropListDropped)="drop($event)">
+                    <div cdkDrag class="taskLink" *ngFor="let task of l2">
+                        <div class="drag-placeholder" *cdkDragPlaceholder></div>
+                        <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
+                            <span class="ttitle text-muted">{{task.name}}</span><br>
+                            <span class="tdesc text-muted">{{task.description}}</span>
+                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
+                            <span *ngIf="task.commentCount" class="tdt mx-2 badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
+                        </li>
+                    </div>
+                </ul>
+                <div class="newTask" data-toggle="modal" data-target="#addTaskModal" (click)="edit = 2"><i class="fa fa-plus"></i> Add New Task</div>
+            </div>
+
+            <div class="plist">
+                <h3>
+                    <span class="float-left list-title">Code Review&nbsp;&nbsp;<span class="badge badge-info">{{l3.length}}</span></span>
+                    <span class="float-right"><i data-toggle="modal" data-target="#addTaskModal" (click)="edit = 3" class="fa fa-plus"></i></span>
+                </h3>
+                <div style="clear: both"></div>
+                <ul cdkDropList [cdkDropListData]="l3" (cdkDropListDropped)="drop($event)">
+                    <div cdkDrag class="taskLink" *ngFor="let task of l3">
+                        <div class="drag-placeholder" *cdkDragPlaceholder></div>
+                        <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
+                            <span class="ttitle text-muted">{{task.name}}</span><br>
+                            <span class="tdesc text-muted">{{task.description}}</span>
+                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
+                            <span *ngIf="task.commentCount" class="tdt mx-2 badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
+                        </li>
+                    </div>
+                </ul>
+                <div class="newTask" data-toggle="modal" data-target="#addTaskModal" (click)="edit = 3"><i class="fa fa-plus"></i> Add New Task</div>
+            </div>
+
+            <div class="plist">
+                <h3>
+                    <span class="float-left list-title">Complete&nbsp;&nbsp;<span class="badge badge-info">{{l4.length}}</span></span>
+                    <span class="float-right"><i data-toggle="modal" data-target="#addTaskModal" (click)="edit = 4" class="fa fa-plus"></i></span>
+                </h3>
+                <ul cdkDropList [cdkDropListData]="l4" (cdkDropListDropped)="drop($event)">
+                    <div cdkDrag class="taskLink" *ngFor="let task of l4">
+                        <div class="drag-placeholder" *cdkDragPlaceholder></div>
+                        <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
+                            <span class="ttitle text-muted">{{task.name}}</span><br>
+                            <span class="tdesc text-muted">{{task.description}}</span>
+                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
+                            <span *ngIf="task.commentCount" class="tdt badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
+                        </li>
+                    </div>
+                </ul>
+                <div class="newTask" data-toggle="modal" data-target="#addTaskModal" (click)="edit = 4"><i class="fa fa-plus"></i> Add New Task</div>
+            </div>
+        </div>
+
+        <div id="addTaskModal" class="modal fade in" style="top: 25%">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add New Task</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input #taskname placeholder="Enter Task Title ..." class="form-control my-2">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="addtask(taskname.value); taskname.value = ''" data-dismiss="modal" class="btn btn-primary">Add Task</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="addMemberModal" class="modal fade in" style="top: 25%">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Team Member</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input #userEmail placeholder="Enter User Email ..." class="form-control my-2">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="addMember(userEmail.value); userEmail.value = ''" data-dismiss="modal" class="btn btn-primary">Add Team Member</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="renameModal" class="modal fade in" style="top: 25%">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Rename Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input #pjctname placeholder="Enter Project Name ..." class="form-control my-2">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="renameProject(pjctname.value); pjctname.value = ''" data-dismiss="modal" class="btn btn-primary">Rename Project</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="membersPanel" *ngIf="showPanel == true">
+            <span style="position: absolute; top: 5px; right: 20px; font-size: 30px; cursor: pointer;" (click)="showPanel = false">×</span>
+            <h4>Project Team Members</h4>
+            <div class="members" style="height: 85%; overflow-y: auto; scrollbar-width: thin;">
+                <p class="member" *ngFor="let member of project.users">
+                    <avatar-name class="sideavatar" [name]="member.name"></avatar-name> {{member.name}}
+                    <i *ngIf="member._id != project.ownerId" (click)="removeMember(member._id, member.name); showPanel = false" class="fa fa-trash float-right mt-2"></i><br>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>

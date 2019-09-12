@@ -1,0 +1,36 @@
+.navbar {
+    background: linear-gradient(315deg, #d2dbe8 0%, #f5f7fa 74%);
+    border-bottom: 2px solid #002b490d;
+}
+
+.navbar-brand img {
+    width: 50px;
+    margin-top: -20px;
+}
+
+.navbar-brand span {
+    font-size: 30px;
+}
+
+.navbar-brand .work {
+    color: #68e0e6;
+}
+
+.navbar-brand .collab {
+    color: #002b49;
+}
+
+.nav-link {
+    padding: 5px 30px !important;
+    margin: 0 10px;
+    color: #fff !important;
+    -webkit-box-shadow: 0px 2px 5px 0px #002b49;
+    -moz-box-shadow: 0px 2px 5px 0px #002b49;
+    box-shadow: 0px 2px 5px 0px #002b49;
+}
+
+@media (max-width: 575.98px) {
+    .nav-link {
+        margin: 10px 50px 5px 50px;
+    }
+}

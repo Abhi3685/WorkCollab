@@ -1,0 +1,52 @@
+<section id="home">
+    <div class="container">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6 leftBlock text-center">
+                    <h3>Welcome to Amigo.</h3>
+                    <p>Login to your account.</p>
+                </div>
+                <div class="col-md-6 rightBlock">
+                    <div id="login-wrapper" class="p-5">
+                        <form>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" #email placeholder="john.doe@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" #password placeholder="********">
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-primary mb-2 px-5" (click)="loginUser()">Login</button>
+                                <br><span class="text-muted" style="cursor: pointer;" data-toggle="modal" data-target="#forgotPassModal">Forgot Your Password?</span>
+                                <br><a routerLink="/signup">Not a member yet?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade in" id="forgotPassModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset Your Password</h5>
+                <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                Submit your email address and we’ll send you a link to reset your password.<br>
+                <input type="email" class="form-control mt-2" #femail placeholder="john.doe@example.com">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" #resetPassBtn class="btn btn-primary" (click)="resetPass()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
