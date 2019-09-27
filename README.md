@@ -8,6 +8,8 @@ Further inside backend folder run npm i and then node app.js to spin our backend
 
 Visit http://localhost:4200 to see the application live in action!
 
+Or you can see a working demo at https://workcollab.herokuapp.com.
+
 # Code Screenshots
 
 **Homepage**
