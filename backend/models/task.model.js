@@ -25,10 +25,6 @@ const TaskSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    labels: {
-        type: Array,
-        default: []
-    },
     commentCount: Number,
     attachmentCount: Number
 });

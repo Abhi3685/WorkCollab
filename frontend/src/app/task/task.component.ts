@@ -7,6 +7,7 @@ import { CommentService } from '../services/comment.service';
 import Swal from 'sweetalert2';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { AttachmentService } from '../services/attachment.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-task',
@@ -30,9 +31,21 @@ export class TaskComponent implements OnInit {
     private commentService: CommentService, 
     private router: Router, 
     private userService: UserService,
-    private attachmentService: AttachmentService) { }
+    private attachmentService: AttachmentService,
+    private socketService: SocketService) { }
     
   ngOnInit() {
+    this.getAllData();
+    this.socketService.emitEvent('join', this.tid);
+    this.socketService.listenToEvent('fetch updated task').subscribe((res) => {
+      this.getAllData();
+    });
+    this.socketService.listenToEvent('leave task page').subscribe((res) => {
+      this.goback();
+    });
+  }
+
+  getAllData(){
     this.pid = this.route.snapshot.params['projectId'];
     this.tid = this.route.snapshot.params['taskId'];
     this.projectService.getProject(this.pid).subscribe(data => {
@@ -55,6 +68,7 @@ export class TaskComponent implements OnInit {
       form.append('projectId', this.pid);
     };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      this.socketService.emitEvent('task_updated', { tid: this.tid, pid: this.pid });
       this.attachments.push(JSON.parse(response));
     };
   }
@@ -65,15 +79,16 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  updateTask(description, name) {
+  updateTask(des: HTMLInputElement, name: HTMLInputElement) {
     if(!name) return Swal.fire({ type: 'error', text: 'Task name can\'t be null' });
     let updatedTask;
     if(this.taskUserId) {
-      updatedTask = { name, description, labels: this.task['labels'], assignedUser: this.taskUserId }
+      updatedTask = { name: name.value, description: des.value, assignedUser: this.taskUserId }
     } else {
-      updatedTask = { name, description, labels: this.task['labels'] }; 
+      updatedTask = { name: name.value, description: des.value }; 
     }
     this.taskService.updateTask(updatedTask, this.tid).subscribe(res => {
+      this.socketService.emitEvent('task_updated', { tid: this.tid, pid: this.pid });
       this.goback();
     });
   }
@@ -87,22 +102,16 @@ export class TaskComponent implements OnInit {
       type: 'warning', text: 'Are you sure you want to delete task?', showCancelButton: true
     }).then(res => {
       if(res.value)
-        this.taskService.deleteTask(this.tid).subscribe(data => this.goback());
+        this.taskService.deleteTask(this.tid).subscribe(data => {
+          this.socketService.emitEvent('task_deleted', { tid: this.tid, pid: this.pid });
+          this.goback();
+        });
     });
   }
 
   toggleTaskMember(userId){
     if(this.taskUserId == userId) this.taskUserId = null;
     else this.taskUserId = userId;
-  }
-
-  addLabel(label) {
-    if(this.task['labels'].indexOf(label) == -1) this.task['labels'].push(label);
-  }
-
-  removeLabel(label){
-    var index = this.task['labels'].indexOf(label);
-    this.task['labels'].splice(index, 1);
   }
 
   fetchComments() {
@@ -113,6 +122,7 @@ export class TaskComponent implements OnInit {
 
   addComment(comment) {
     this.commentService.addComment(comment, this.tid, this.pid).subscribe(data => {
+      this.socketService.emitEvent('task_updated', { tid: this.tid, pid: this.pid });
       this.fetchComments();
     });
   }
@@ -123,7 +133,9 @@ export class TaskComponent implements OnInit {
     }).then(res => {
       if(res.value){
         this.comments.splice(index, 1);
-        this.commentService.deleteComment(commentId);
+        this.commentService.deleteComment(commentId).subscribe(res => {
+          this.socketService.emitEvent('task_updated', { tid: this.tid, pid: this.pid });
+        });
       }
     });
   }
@@ -140,7 +152,9 @@ export class TaskComponent implements OnInit {
     }).then(res => {
       if(res.value){
         this.attachments.splice(index, 1);
-        this.attachmentService.deleteAttachment(attachmentId);
+        this.attachmentService.deleteAttachment(attachmentId).subscribe(res => {
+          this.socketService.emitEvent('task_updated', { tid: this.tid, pid: this.pid });
+        });
       }
     });
   }

@@ -22,6 +22,7 @@ import { ProjectService } from './services/project.service';
 import { AuthInterceptor } from './auth.interceptor';
 import { TaskService } from './services/task.service';
 import { ResetpassComponent } from './resetpass/resetpass.component';
+import { SocketService } from './services/socket.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -60,6 +61,7 @@ const routes: Routes = [
     UserService,
     ProjectService,
     TaskService,
+    SocketService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

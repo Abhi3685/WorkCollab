@@ -36,7 +36,6 @@ router.patch('/:taskId', async(req, res) => {
     task.name = req.body.name;
     if (req.body.listId) task.listId = req.body.listId;
     task.assignedUser = req.body.assignedUser;
-    task.labels = req.body.labels;
     await task.save();
     res.json({ msg: 'Task Updated!' });
 });

@@ -5,6 +5,7 @@ import { TaskService } from '../services/task.service';
 import Swal from 'sweetalert2';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { UserService } from '../services/user.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-project',
@@ -23,7 +24,8 @@ export class ProjectComponent implements OnInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private taskService: TaskService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private socketService: SocketService) { }
 
   ngOnInit() {
     let id = this.route.snapshot.params['projectId'];
@@ -32,6 +34,24 @@ export class ProjectComponent implements OnInit {
       if(data['err']) return this.userService.clearLogIn();
       this.project = data;
       this.fetchTasks();
+      this.socketService.emitEvent('join', id);
+    });
+    this.socketService.listenToEvent('update tasks').subscribe((res) => {
+      this.fetchTasks();
+    });
+    this.socketService.listenToEvent('update project name').subscribe((res) => {
+      this.project.name = res;
+    });
+    this.socketService.listenToEvent('leave project').subscribe((res) => {
+      this.router.navigate(['/projects']);
+    });
+    this.socketService.listenToEvent('update members').subscribe((res) => {
+      this.projectService.getProject(id).subscribe(data => {
+        this.project = data;
+        if(!this.project.users.includes(localStorage.getItem('token'))) {
+          this.router.navigate(['/projects']);
+        }
+      });
     });
   }
 
@@ -54,6 +74,7 @@ export class ProjectComponent implements OnInit {
 
   addtask(name){
     this.taskService.createTask(name, '', this.project._id, this.edit).subscribe(data => {
+      this.socketService.emitEvent('task_addormove', this.project._id);
       this.fetchTasks();
     });
   }
@@ -61,6 +82,7 @@ export class ProjectComponent implements OnInit {
   renameProject(name) {
     this.projectService.renameProject(name, this.project._id).subscribe(data => {
       this.project = data;
+      this.socketService.emitEvent('project_rename', this.project);
     });
   }
 
@@ -72,6 +94,7 @@ export class ProjectComponent implements OnInit {
         this.showLoader = true;
         this.projectService.deleteProject(this.project._id).subscribe(data => {
           this.showLoader = false;
+          this.socketService.emitEvent('project_delete', this.project._id);
           if(!data) return this.router.navigate(['/projects']);
         });
       }
@@ -85,6 +108,7 @@ export class ProjectComponent implements OnInit {
       if(res.value){
         this.projectService.leaveProject(this.project._id).subscribe(data => {
           if(!data) return this.router.navigate(['/projects']);
+          this.socketService.emitEvent('member_list_update', this.project._id);
         });
       }
     });
@@ -92,10 +116,12 @@ export class ProjectComponent implements OnInit {
 
   addMember(userEmail) {
     this.projectService.addMember(userEmail, this.project._id).subscribe(data => {
+      this.socketService.emitEvent('inform_member', data['_id']);
       this.projectService.getProject(this.project._id).subscribe(data => {
         if(!data) return this.router.navigate(['/projects']);
         this.project = data;
       });
+      this.socketService.emitEvent('member_list_update', this.project._id);
     });
   }
 
@@ -110,6 +136,8 @@ export class ProjectComponent implements OnInit {
             if(!data) return this.router.navigate(['/projects']);
             this.project = data;
           });
+          this.socketService.emitEvent('inform_member', userId);
+          this.socketService.emitEvent('member_list_update', this.project._id);
         });
       }
     });
@@ -127,6 +155,7 @@ export class ProjectComponent implements OnInit {
           transferArrayItem(event.container.data, event.previousContainer.data,
                             event.currentIndex, event.previousIndex);
         }
+        this.socketService.emitEvent('task_addormove', this.project._id);
       });
     } else {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

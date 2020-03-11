@@ -86,7 +86,7 @@ router.post('/adduser', async(req, res) => {
         var project = await Project.findById(req.body.projectId);
         project.users.push(mongoose.Types.ObjectId(user._id));
         await project.save();
-        res.json({ msg: 'Member Added Successfully' });
+        res.json({ msg: 'Member Added Successfully', _id: user._id });
     }
 });
 

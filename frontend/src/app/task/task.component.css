@@ -13,13 +13,9 @@
     line-height: 30px;
 }
 
-.card-body {
-    padding: 1rem;
-}
-
 .pmember {
     width: 90%;
-    padding: 5px 10px;
+    padding: 10px;
     border-radius: 15px;
     max-width: 300px;
     text-transform: uppercase;
@@ -36,15 +32,9 @@
     color: rgba(0, 0, 0, 0.5);
 }
 
-.comment {
+.comment, .attachment {
     background: rgba(0, 0, 0, 0.05);
-    padding: 5px 10px;
-    border-radius: 10px;
-}
-
-.attachment {
-    background: rgba(0, 0, 0, 0.05);
-    padding: 5px 10px;
+    padding: 10px 20px 15px 20px;
     border-radius: 10px;
 }
 
@@ -77,15 +67,9 @@
     background: #007bffaf;
 }
 
-.actionBtns {
-    background: #f7f7f7;
-    border: 2px solid #f9f9f9;
-    border-radius: 0.4rem;
-    padding: 0.75rem;
-    text-align: center;
-}
-
-.card {
-    border-radius: 0.4rem;
-    margin-bottom: 5px;
+.section_wrapper {
+    margin-bottom: 30px;
+    background: white;
+    padding: 25px 30px;
+    border-radius: 10px;
 }

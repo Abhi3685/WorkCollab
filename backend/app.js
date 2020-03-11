@@ -6,11 +6,11 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const http = require('http');
 
-const User = require('./models/user.model');
-
 const app = express();
 const server = http.createServer(app);
-// const io = require('socket.io')(server);
+var io = require('socket.io')(server);
+require('./socket')(io);
+
 app.use(bodyParser.json());
 app.use(cors({
     origin: 'http://localhost:4200',
@@ -25,13 +25,6 @@ app.use(session({
     store: new MongoStore({ url: 'mongodb+srv://root:rootpass@cluster0-ovgxm.mongodb.net/appdb' })
 }));
 mongoose.set('useFindAndModify', false);
-
-// io.on('connection', function(socket) {
-//     socket.on('event1', data => {
-//         console.log(data);
-//     });
-//     console.log('a user connected');
-// });
 
 const AuthCheck = function(req, res, next) {
     if (!req.session._id) return res.json({ err: 'Unauthorized Access' });
@@ -55,5 +48,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 db.once('open', function() {
-    server.listen(process.env.PORT || 8000);
+    server.listen(8000);
+    console.log("Server started!");
 });
