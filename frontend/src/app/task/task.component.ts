@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../services/task.service';
 import { UserService } from '../services/user.service';
@@ -24,7 +24,8 @@ export class TaskComponent implements OnInit {
   comments; attachments;
   showLoader = true;
   uploader: FileUploader = new FileUploader({url: 'http://localhost:8000/attachment/add', itemAlias: 'uploadFile'});
-  
+  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+
   constructor(private route: ActivatedRoute, 
     private taskService: TaskService,
     private projectService: ProjectService, 
@@ -70,6 +71,7 @@ export class TaskComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       this.socketService.emitEvent('task_updated', { tid: this.tid, pid: this.pid });
       this.attachments.push(JSON.parse(response));
+      this.fileInput.nativeElement.value = "";
     };
   }
 

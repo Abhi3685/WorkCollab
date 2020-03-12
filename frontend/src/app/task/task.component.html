@@ -15,8 +15,7 @@
                     <input #tname class="form-control mb-2" value="{{task.name}}">
                     <span>Description</span>
                     <textarea #desc class="form-control" value="{{task.description}}" placeholder="Add a detailed description …" style="color: black; overflow-y: auto; overflow-wrap: break-word; resize: none; height: 90px;"></textarea>
-                </div>
-                <div class="section_wrapper">
+                    <br><hr><br>
                     <h5>Assign Task Member</h5>
                     <p>Click on team member to assign user to this task</p>
                     <div class="pmember mb-1" *ngFor="let member of projectMembers.sort()" (click)="toggleTaskMember(member._id)">
@@ -24,8 +23,7 @@
                         {{member.name}}
                         <span class="float-right mt-1 mr-2" *ngIf="taskUserId && member._id == taskUserId"><i class="fa fa-check"></i></span>
                     </div>
-                </div>
-                <div class="section_wrapper">
+                    <br><hr><br>
                     <h5>Task Comments</h5>
                     <p>Type & Press Enter to add a comment</p>
                     <input #comment (keyup.enter)="addComment(comment.value); comment.value=''" class="form-control">
@@ -36,10 +34,9 @@
                             <span class="float-right"><i (click)="confirmCommentDelete(comment._id, i)" class="fa fa-trash"></i></span>
                         </div>
                     </div>
-                </div>
-                <div class="section_wrapper">
+                    <br><hr><br>
                     <h5>Task Attachments</h5>
-                    <input type="file" class="form-control mb-2" name="uploadFile" (change)="uploader.uploadAll()" ng2FileSelect [uploader]="uploader" />
+                    <input type="file" #fileInput class="form-control mb-2" name="uploadFile" (change)="uploader.uploadAll();" ng2FileSelect [uploader]="uploader" />
                     <div class="attachments">
                         <div class="attachment my-2" style="cursor: pointer;" *ngFor="let attachment of attachments; let i = index">
                             <span (click)="openAttachment(attachment.fileUrl)"><b>{{attachment.name}}</b></span>
@@ -47,11 +44,12 @@
                             <span class="float-right"><i (click)="confirmAttachmentDelete(attachment._id, i)" class="fa fa-trash"></i></span>
                         </div>
                     </div>
-                </div>
-                <div class="section_wrapper text-center">
-                    <button (click)="updateTask(desc, tname)" class="btn btn-primary mr-2">Save Changes</button>
-                    <button (click)="goback()" class="btn btn-secondary mr-2">Cancel</button>
-                    <button (click)="deleteTask()" class="btn btn-danger">Delete Task</button>
+                    <br><hr><br>
+                    <div class="text-center">
+                        <button (click)="updateTask(desc, tname)" class="btn btn-primary mr-2">Save Changes</button>
+                        <button (click)="goback()" class="btn btn-secondary mr-2">Cancel</button>
+                        <button (click)="deleteTask()" class="btn btn-danger">Delete Task</button>
+                    </div>    
                 </div>
             </div>
 

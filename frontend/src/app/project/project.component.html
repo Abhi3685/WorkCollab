@@ -35,9 +35,10 @@
                         <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
                             <span class="ttitle text-muted">{{task.name}}</span><br>
                             <span class="tdesc text-muted">{{task.description}}</span>
-                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
-                            <span *ngIf="task.commentCount" class="tdt mx-2 badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
-                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <hr>
+                            <span class="tdt pr-1">{{task.createdAt | timeAgo}}</span>
+                            <span *ngIf="task.commentCount" class="tdt px-2"><i class="fa fa-comments pl-3"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt px-2"><i class="fa fa-paperclip pl-3"></i>&nbsp;{{task.attachmentCount}}</span>
                             <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
                         </li>
                     </div>
@@ -56,9 +57,10 @@
                         <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
                             <span class="ttitle text-muted">{{task.name}}</span><br>
                             <span class="tdesc text-muted">{{task.description}}</span>
-                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
-                            <span *ngIf="task.commentCount" class="tdt mx-2 badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
-                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <hr>
+                            <span class="tdt pr-2">{{task.createdAt | timeAgo}}</span>
+                            <span *ngIf="task.commentCount" class="tdt px-2"><i class="fa fa-comments pl-3"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt px-2"><i class="fa fa-paperclip pl-3"></i>&nbsp;{{task.attachmentCount}}</span>
                             <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
                         </li>
                     </div>
@@ -78,9 +80,10 @@
                         <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
                             <span class="ttitle text-muted">{{task.name}}</span><br>
                             <span class="tdesc text-muted">{{task.description}}</span>
-                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
-                            <span *ngIf="task.commentCount" class="tdt mx-2 badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
-                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <hr>
+                            <span class="tdt pr-2">{{task.createdAt | timeAgo}}</span>
+                            <span *ngIf="task.commentCount" class="tdt px-2"><i class="fa fa-comments pl-3"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt px-2"><i class="fa fa-paperclip pl-3"></i>&nbsp;{{task.attachmentCount}}</span>
                             <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
                         </li>
                     </div>
@@ -99,9 +102,10 @@
                         <li class="task" routerLink='/project/{{project._id}}/task/{{task._id}}'>
                             <span class="ttitle text-muted">{{task.name}}</span><br>
                             <span class="tdesc text-muted">{{task.description}}</span>
-                            <span class="tdt badge badge-secondary mr-2"><i class="fa fa-calendar"></i>&nbsp;{{task.createdAt}}</span>
-                            <span *ngIf="task.commentCount" class="tdt badge badge-info mr-2"><i class="fa fa-comments"></i>&nbsp;{{task.commentCount}}</span>
-                            <span *ngIf="task.attachmentCount" class="tdt badge badge-primary"><i class="fa fa-paperclip"></i>&nbsp;{{task.attachmentCount}}</span>
+                            <hr>
+                            <span class="tdt pr-2">{{task.createdAt | timeAgo}}</span>
+                            <span *ngIf="task.commentCount" class="tdt px-2"><i class="fa fa-comments pl-3"></i>&nbsp;{{task.commentCount}}</span>
+                            <span *ngIf="task.attachmentCount" class="tdt px-2"><i class="fa fa-paperclip pl-3"></i>&nbsp;{{task.attachmentCount}}</span>
                             <avatar-name *ngIf="task.assignedUser" class="avatar float-right" [name]="task.assignedUser.name"></avatar-name>
                         </li>
                     </div>
@@ -174,10 +178,11 @@
             <span style="position: absolute; top: 5px; right: 20px; font-size: 30px; cursor: pointer;" (click)="showPanel = false">×</span>
             <h4>Project Team Members</h4>
             <div class="members" style="height: 85%; overflow-y: auto; scrollbar-width: thin;">
-                <p class="member" *ngFor="let member of project.users">
-                    <avatar-name class="sideavatar" [name]="member.name"></avatar-name> {{member.name}}
+                <div class="member" *ngFor="let member of project.users">
+                    <avatar-name class="sideavatar float-left" [name]="member.name"></avatar-name>&nbsp;&nbsp;<div class="float-left ml-2" style="padding-top: 2px;">{{member.name}}</div>
                     <i *ngIf="member._id != project.ownerId" (click)="removeMember(member._id, member.name); showPanel = false" class="fa fa-trash float-right mt-2"></i><br>
-                </p>
+                    <div style="clear: both;"></div>
+                </div>
             </div>
         </div>
 

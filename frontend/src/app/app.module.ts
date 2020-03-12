@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AvatarNameInitialsModule } from 'avatar-name-initials';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { AppComponent } from './app.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -41,6 +42,7 @@ const routes: Routes = [
     HomeComponent,
     SignupComponent,
     LoginComponent,
+    TimeAgoPipe,
     ProjectsComponent,
     ProjectComponent,
     TaskComponent,

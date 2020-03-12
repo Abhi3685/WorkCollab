@@ -12,7 +12,8 @@ router.post('/add', async(req, res) => {
         name: req.body.name,
         description: req.body.desc,
         projectId: mongoose.Types.ObjectId(req.body.pId),
-        listId: req.body.listId
+        listId: req.body.listId,
+        createdAt: new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"})
     });
     await task.save();
     res.json({ msg: 'Task Created Successfully' });

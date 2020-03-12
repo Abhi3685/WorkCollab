@@ -8,7 +8,9 @@
 .avatar /deep/ .gavatar {
     margin: 0px;
     border-radius: 15px;
-    width: 30px;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    width: 35px;
     height: 30px;
     line-height: 30px;
 }

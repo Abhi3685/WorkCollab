@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
 
 const TaskSchema = new mongoose.Schema({
     name: {
@@ -19,7 +18,7 @@ const TaskSchema = new mongoose.Schema({
     },
     createdAt: {
         type: String,
-        default: moment(new Date()).format('MMM DD')
+        required: true
     },
     assignedUser: {
         type: mongoose.Schema.Types.ObjectId,
